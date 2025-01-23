@@ -36,12 +36,77 @@ console.log("Hello World!")
 //variables
 let computerScore = 0;
 let humanScore = 0;
-let computerInput = "";
-let humanInput = "";
+let roundCtr = 0;
+
 
 // Computer input
-let computerNumber = Math.floor(Math.random() * 3) + 1;
-switch (computerNumber) {
-    case 1:
+const getComputerInput = () => {
+    const computerNumber = Math.floor(Math.random() * 3) + 1;
 
+    switch (computerNumber) {
+        case 1:
+            return "rock";
+        case 2:
+            return "paper";
+        case 3:
+            return "scissor";
+        default:
+            return "Invalid input.";
+    }
+};
+
+// Human input
+const getValidHumanInput = () => {
+    let humanInput = "";
+
+    while (true) {
+        humanInput = prompt("Rock, Paper or Scissor?").toLowerCase();
+
+        if (humanInput === "rock" || humanInput === "paper" || humanInput === "scissor") {
+            break;
+        }
+
+        alert("Invalid input, try again please.")
+    }
+
+    return humanInput;
 }
+
+const getRoundResult = (humanInput, computerInput) => {
+    if (humanInput === computerInput) {
+        return "Its a tie!";
+    }
+
+    if (humanInput === "rock" && computerInput === "paper" || humanInput === "paper" && computerInput === "scissor" || humanInput === "scissor" && computerInput === "rock") {
+        computerScore++;
+        return "gitgud!";
+    } else {
+        humanScore++;
+        return "You win!";
+    }
+}
+
+while (roundCtr < 5) {
+    let humanInput = getValidHumanInput();
+    let computerInput = getComputerInput(); 
+    let result = getRoundResult(humanInput, computerInput);
+
+    console.clear();
+
+    console.log(`You chose ${humanInput}.`);
+    console.log(`The computer chose ${computerInput}.`);
+    
+    console.log(`Round ${roundCtr + 1} result: ${result}`);
+    console.log("Score (You - Computer)")
+    console.log(`${humanScore} - ${computerScore}`)
+    roundCtr++;
+}
+
+if (computerScore > humanScore) {
+    console.log("Sorry, gitgud!");
+} else if (computerScore < humanScore) {
+    console.log("Congrats, you won!");
+} else {
+    console.log("Well, you're lucky today!");
+}
+
